@@ -1,0 +1,36 @@
+callbacks:
+  mode: min
+  monitor: val_loss
+  patience: 100
+cross-validation:
+  cv: 25
+data:
+  datadir: traj_data/
+model_parameters:
+  activation: relu
+  attention_heads: 1
+  augmentation: true
+  batch_size: 8
+  depth: 3
+  dropout: 0.5
+  final_learning_rate: 0.005
+  kernel: 3
+  label_smoothing: 0.1
+  learning_rate: 0.005
+  meta_data: null
+  num_dense: 1
+  num_epochs: 10000
+  num_sequences: 1
+  oversample: 5
+  pool: 4
+  regularisation: 0.005
+  residuals: false
+  sequence_length: 128
+  sigmoid_attention: true
+  squeeze: false
+  units: 64
+processing:
+  add_features: true
+  decimate_factor: 8
+  smooth: false
+  smooth_window: 5
