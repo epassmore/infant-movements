@@ -168,7 +168,7 @@ def get_named_angles(data):
 
     return angles
 
-def get_train_test_split(metadata, split = 0.33):
+def get_train_test_split(metadata, split = 0.33, random_state=None):
     """
     split data set into training (development) and testing (held-out) data.
     stratify on GMA score
@@ -187,7 +187,7 @@ def get_train_test_split(metadata, split = 0.33):
     Y = unique_participants['gma_vid_score'].values[:,np.newaxis]
 
     #train test split stratified by gma value
-    x_train, x_validate, y_train, y_validate = train_test_split(X, Y, test_size = split ,stratify = Y)
+    x_train, x_validate, y_train, y_validate = train_test_split(X, Y, test_size = split ,stratify = Y, random_state=random_state)
 
     # get all data for subjects in train
     train_index = np.where(metadata['idnum'].isin(x_train[:,0]))[0]

@@ -11,8 +11,13 @@ from joblib import dump
 
 from sklearn.metrics import roc_auc_score, recall_score, precision_score
 
+import tensorflow as tf
+# fix random seeds for reproc
+seed = 12345
+tf.keras.utils.set_random_seed(seed)
+
 #os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
-#os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 def main(config):
 
@@ -123,11 +128,11 @@ def main(config):
         # number of clips per subject
         data_gen_params['length'] = len(strided)
 
-        # precompute random curves for data augmentation and save out for later
-        curves = generate_random_curves(length = data_gen_params['seq_length'], sigma=1., max_knot=15)
-        outfile = outdir + 'curves.npy'
-        np.save(outfile, curves)
-        print('saving random curves to {:}curves.npy'.format(outdir))
+    # precompute random curves for data augmentation and save out for later
+    curves = generate_random_curves(length = data_gen_params['seq_length'], sigma=1., max_knot=15)
+    outfile = outdir + 'curves.npy'
+    np.save(outfile, curves)
+    print('saving random curves to {:}curves.npy'.format(outdir))
 
     # CROSS VALIDATION #####################################################
     vid_list = list(info['video'])
@@ -142,7 +147,7 @@ def main(config):
             print('FOLD {:} already run ***********************************'.format(n))
         else:
             # get train/test split
-            train_fold_index, test_fold_index = get_train_test_split(info, split=.15)
+            train_fold_index, test_fold_index = get_train_test_split(info, split=.15, random_state=n*seed) #fix random state for reproc
             print('FOLD {:} *****************************************************'.format(n))
             # output folders
             folddir = outdir + 'FOLD{:04d}/'.format(n)
@@ -174,7 +179,7 @@ def main(config):
             model, loss, generators = train_model(train_x, train_y, train_a, info.iloc[train_fold_index],
                                         outdir, chkfolddir,
                                         data_gen_params, model_params, cb_params, training_params,
-                                        split = .12)
+                                        split = .12, random_state=n)
 
             # calibrate
             calibrator = calibrate_model(generators['validation'], model)

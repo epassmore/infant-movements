@@ -6,7 +6,7 @@ import pandas as pd
 import tensorflow as tf
 from tensorflow.keras.layers import Input, Dropout, MaxPooling2D, BatchNormalization, Dense, Activation, Conv1D, Multiply, Add, GlobalAveragePooling2D
 
-from einops.layers.keras import Rearrange
+from einops.layers.keras import Rearrange, Reduce
 
 from models.layers import AttentionWithContext
 from utils import get_train_test_split
@@ -119,6 +119,7 @@ def get_model(input_shape,
     else:
         a, x = AttentionWithContext(units=units, bias=True, kernel_initializer=KERNEL_INIT,  W_regularizer=tf.keras.regularizers.l2(l2=reg), sigmoid=sigmoid)(x)
 
+    #x = Reduce('batch sample features -> batch features', 'mean')(x)
     # add on meta data if available
     if meta:
         x = tf.keras.layers.Concatenate()([x, x_meta])
@@ -141,7 +142,7 @@ def get_model(input_shape,
 
     return model
 
-def train_model(x, y, a, info, datadir, checkdir, generator_params, model_params, callback_params, training_params, split=0.33):
+def train_model(x, y, a, info, datadir, checkdir, generator_params, model_params, callback_params, training_params, split=0.33, random_state=None):
     """train model returning model with best performance on inner validation split
 
     :param x, list of ids in training data
@@ -160,7 +161,7 @@ def train_model(x, y, a, info, datadir, checkdir, generator_params, model_params
     :return loss_df, dataframe with training and val loss for each epoch"""
 
     # data generators
-    train_index, test_index = get_train_test_split(info, split=split)
+    train_index, test_index = get_train_test_split(info, split=split, random_state=random_state)
     train_x = [x[i] for i in train_index]
     train_y = [y[i] for i in train_index]
     val_x = [x[i] for i in test_index]
@@ -208,7 +209,7 @@ def train_model(x, y, a, info, datadir, checkdir, generator_params, model_params
                                 )
 
     # save plot of model
-    #tf.keras.utils.plot_model(model, to_file=datadir + '/model.png')
+    tf.keras.utils.plot_model(model, to_file=datadir + '/model.png')
     print(model.summary())
 
     # metrics
