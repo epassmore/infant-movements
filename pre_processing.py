@@ -516,7 +516,7 @@ def trajectory_video(points, colors, output_dir, options):
         # plot
         plot_scatter_video(row[1].to_frame().transpose(), outpath+name, colors, options)
     
-    return outpath+name
+    return outpath
 
 def plot_scatter_video(points, output_base, colors, options):
     #points: dataframe of x y coordinates ouput from DLC
