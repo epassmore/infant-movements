@@ -692,8 +692,12 @@ for video in file_names:
 #         fig2 = plot_trajectories_xy(proc_points[step], results_dir, colors, options)
         
         #create video of results
-#         voptions = {'name': base_name, 'height': height, 'width': width, 'fps':fps, 'unit_length': infant_length, 
-#                        'step': s}
-#         vid_path = create_trajvideo(proc_points[step], colors, result_dir, voptions)
+#         if step <= 5:
+    #         voptions = {'name': base_name, 'height': height, 'width': width, 'fps':fps, 'unit_length': infant_length, 
+    #                        'step': step}
+#         else:
+            voptions = {'name': base_name, 'height': height, 'width': width, 'fps':25, 'unit_length': infant_length, 
+    #                        'step': step}
+#         vid_path = create_trajvideo(proc_points[step], colors, results_dir, voptions)
     
 
