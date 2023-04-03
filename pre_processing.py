@@ -694,6 +694,6 @@ for video in file_names:
         #create video of results
 #         voptions = {'name': base_name, 'height': height, 'width': width, 'fps':fps, 'unit_length': infant_length, 
 #                        'step': s}
-#         vid_path = create_trajvideo(df_points, colors, result_dir, voptions)
+#         vid_path = create_trajvideo(proc_points[step], colors, result_dir, voptions)
     
 
