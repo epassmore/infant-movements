@@ -1,0 +1,102 @@
+all_joints:
+- - 0
+- - 1
+- - 2
+- - 3
+- - 4
+- - 5
+- - 6
+- - 7
+- - 8
+- - 9
+- - 10
+- - 11
+- - 12
+- - 13
+- - 14
+- - 15
+- - 16
+- - 17
+all_joints_names:
+- Crown
+- LEye
+- REye
+- Chin
+- LShoulder
+- LElbow
+- LHand
+- LHip
+- LKnee
+- LHeel
+- LToe
+- RShoulder
+- RElbow
+- RHand
+- RHip
+- RKnee
+- RHeel
+- RToe
+batch_size:
+bottomheight: 400
+crop: true
+crop_pad: 0
+cropratio: 0.4
+dataset: 
+  UnaugmentedDataSet_BabyMoves_V1Nov22/BabyMoves_V1_Human195shuffle1.mat
+dataset_type: default
+deterministic: false
+display_iters: 1000
+fg_fraction: 0.25
+global_scale: 0.8
+init_weights: train/snapshot-1030000
+intermediate_supervision: false
+intermediate_supervision_layer: 12
+leftwidth: 400
+location_refinement: true
+locref_huber_loss: true
+locref_loss_weight: 0.05
+locref_stdev: 7.2801
+log_dir: log
+max_input_size: 1500
+mean_pixel:
+- 123.68
+- 116.779
+- 103.939
+metadataset: 
+  UnaugmentedDataSet_BabyMoves_V1Nov22/Documentation_data-BabyMoves_V1_95shuffle1.pickle
+min_input_size: 64
+minsize: 100
+mirror: false
+multi_step:
+- - 0.005
+  - 10000
+- - 0.02
+  - 430000
+- - 0.002
+  - 730000
+- - 0.001
+  - 1030000
+net_type: resnet_50
+num_joints: 18
+num_outputs: 1
+optimizer: sgd
+pairwise_huber_loss: true
+pairwise_predict: false
+partaffinityfield_predict: false
+pos_dist_thresh: 17
+project_path: exported-models
+regularize: false
+rightwidth: 400
+save_iters: 50000
+scale_jitter_lo: 0.5
+scale_jitter_up: 1.25
+scoremap_dir: test
+shuffle: true
+snapshot_prefix: 
+  exported-models/DLC_BabyMoves_V1_resnet_50_iteration-0_shuffle-1/train
+stride: 8.0
+topheight: 400
+weigh_negatives: false
+weigh_only_present_joints: false
+weigh_part_predictions: false
+weight_decay: 0.0001
